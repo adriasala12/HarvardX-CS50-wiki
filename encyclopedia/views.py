@@ -1,8 +1,9 @@
 from django.shortcuts import render
-
+from django.urls import reverse
 from . import util
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 import markdown
+from django.views.decorators.http import require_http_methods
 
 
 def index(request):
@@ -24,3 +25,10 @@ def wiki(request, title):
         "page": page,
         "title": title
     })
+
+@require_http_methods(['POST'])
+def search(request):
+
+    # if request.method == 'POST':
+        text = request.POST['q']
+        return HttpResponseRedirect(reverse('wiki', args=(text,)))
