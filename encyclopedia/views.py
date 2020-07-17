@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from . import util
 from django.http import Http404, HttpResponseRedirect
 import markdown
 from django.views.decorators.http import require_http_methods
+import random
 
 
 def index(request):
@@ -73,3 +74,14 @@ def edit(request, title):
     }
 
     return render(request, "encyclopedia/edit.html", context)
+
+
+def randomize(request):
+    titles = util.list_entries()
+    random_title = random.choice(titles)
+    return redirect('wiki', title=random_title)
+    # page = util.get_entry(random_title)
+    # return render(request, "encyclopedia/wiki.html", {
+    #     "page": page,
+    #     "title": random_title
+    # })
