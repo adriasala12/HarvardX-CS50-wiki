@@ -58,3 +58,18 @@ def new(request):
         return HttpResponseRedirect(reverse('wiki', args=(title,)))
 
     return render(request, "encyclopedia/new.html")
+
+
+def edit(request, title):
+
+    if request.method == 'POST':
+        content = request.POST['content']
+        util.save_entry(title, content)
+        return HttpResponseRedirect(reverse('wiki', args=(title,)))
+
+    context = {
+        "title": title,
+        "content": util.get_entry(title)
+    }
+
+    return render(request, "encyclopedia/edit.html", context)

@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block body %}
+    <div class="nav justify-content-end">
+        <a href="{% url 'edit' title %}">
+            <button class="btn btn-secondary px-5 py-2 mr-3" type="button">Edit</button>
+        </a>
+    </div>
 
     {{ page|safe }}
 
