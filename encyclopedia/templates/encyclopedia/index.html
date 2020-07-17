@@ -5,13 +5,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Pages</h1>
+
+    {% if search == "yes" %}
+        <h1>Search Results</h1>
+    {% else %}
+        <h1>All Pages</h1>
+    {% endif %}
 
     <ul>
         {% for entry in entries %}
             <a href="{% url 'wiki' entry %}">
                 <li>{{ entry }}</li>
             </a>
+        {% empty %}
+            {% if search == "yes" %}
+                <h3 class="text-muted m-3">No matches found.</h3>
+            {% else %}
+                <h3 class="text-muted m-3">No pages listed.</h3>
+            {% endif %}
         {% endfor %}
     </ul>
 

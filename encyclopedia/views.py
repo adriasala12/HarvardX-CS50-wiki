@@ -32,8 +32,20 @@ def wiki(request, title):
 @require_http_methods(['POST'])
 def search(request):
 
-    title = request.POST['q']
-    return HttpResponseRedirect(reverse('wiki', args=(title,)))
+    query = request.POST['q']
+    titles = util.list_entries()
+    if query in titles:
+        return HttpResponseRedirect(reverse('wiki', args=(query,)))
+    else:
+        matches = []
+        for title in titles:
+            if query.lower() in title.lower():
+                matches.append(title)
+
+        return render(request, "encyclopedia/index.html", {
+            "entries": matches,
+            "search": "yes"
+        })
 
 
 def new(request):
@@ -80,8 +92,3 @@ def randomize(request):
     titles = util.list_entries()
     random_title = random.choice(titles)
     return redirect('wiki', title=random_title)
-    # page = util.get_entry(random_title)
-    # return render(request, "encyclopedia/wiki.html", {
-    #     "page": page,
-    #     "title": random_title
-    # })
