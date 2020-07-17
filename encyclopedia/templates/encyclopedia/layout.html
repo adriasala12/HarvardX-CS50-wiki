@@ -12,19 +12,39 @@
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
                 <h2>Wiki</h2>
-                <form action="{% url 'search' %}" method="post">
-                    {% csrf_token %}
-                    <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
-                </form>
-                <div>
-                    <a href="{% url 'index' %}">Home</a>
-                </div>
-                <div>
-                    <a href="{% url 'new' %}">Create New Page</a>
-                </div>
-                <div>
-                    <a href="{% url 'randomize' %}">Random Page</a>
-                </div>
+                <table class="table">
+                    <tr>
+                        <td>
+                            <form action="{% url 'search' %}" method="post">
+                                {% csrf_token %}
+                                <input class="search form-control" type="text" name="q" placeholder="Search Encyclopedia">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <a href="{% url 'index' %}">Home</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <a href="{% url 'new' %}">Create New Page</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <a href="{% url 'randomize' %}">Random Page</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
                 {% block nav %}
                 {% endblock %}
             </div>
