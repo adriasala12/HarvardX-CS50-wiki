@@ -38,11 +38,20 @@ def search(request):
 def new(request):
 
     if request.method == 'POST':
+        existing_titles = util.list_entries()
 
         title = request.POST['title']
-
         text = f"""# {title}
 {request.POST['text']}"""
+
+        if title in existing_titles:
+            context = {
+                "message": "There is already one entry with this title.",
+                "title": title,
+                "text": request.POST['text']
+            }
+
+            return render(request, "encyclopedia/new.html", context)
 
         util.save_entry(title, text)
 
