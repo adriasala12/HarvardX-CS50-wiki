@@ -11,6 +11,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
+
 def wiki(request, title):
 
     page = util.get_entry(title)
@@ -26,9 +27,25 @@ def wiki(request, title):
         "title": title
     })
 
+
 @require_http_methods(['POST'])
 def search(request):
 
-    # if request.method == 'POST':
-        text = request.POST['q']
-        return HttpResponseRedirect(reverse('wiki', args=(text,)))
+    title = request.POST['q']
+    return HttpResponseRedirect(reverse('wiki', args=(title,)))
+
+
+def new(request):
+
+    if request.method == 'POST':
+
+        title = request.POST['title']
+
+        text = f"""# {title}
+{request.POST['text']}"""
+
+        util.save_entry(title, text)
+
+        return HttpResponseRedirect(reverse('wiki', args=(title,)))
+
+    return render(request, "encyclopedia/new.html")
